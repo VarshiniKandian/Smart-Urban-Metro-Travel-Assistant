@@ -1,0 +1,240 @@
+{
+  "Miyapur": {
+    "lat": 17.4933,
+    "lng": 78.3915,
+    "neighbors": [
+      {"station": "JNTU College", "line": "Red", "time": 2}
+    ]
+  },
+  "JNTU College": {
+    "lat": 17.4871,
+    "lng": 78.3994,
+    "neighbors": [
+      {"station": "Miyapur", "line": "Red", "time": 2},
+      {"station": "KPHB Colony", "line": "Red", "time": 2}
+    ]
+  },
+  "KPHB Colony": {
+    "lat": 17.4837,
+    "lng": 78.4075,
+    "neighbors": [
+      {"station": "JNTU College", "line": "Red", "time": 2},
+      {"station": "Kukatpally", "line": "Red", "time": 2}
+    ]
+  },
+  "Kukatpally": {
+    "lat": 17.4812,
+    "lng": 78.4132,
+    "neighbors": [
+      {"station": "KPHB Colony", "line": "Red", "time": 2},
+      {"station": "Balanagar", "line": "Red", "time": 3}
+    ]
+  },
+  "Balanagar": {
+    "lat": 17.4709,
+    "lng": 78.4297,
+    "neighbors": [
+      {"station": "Kukatpally", "line": "Red", "time": 3},
+      {"station": "Moosapet", "line": "Red", "time": 2}
+    ]
+  },
+  "Moosapet": {
+    "lat": 17.4594,
+    "lng": 78.4327,
+    "neighbors": [
+      {"station": "Balanagar", "line": "Red", "time": 2},
+      {"station": "Bharat Nagar", "line": "Red", "time": 2}
+    ]
+  },
+  "Bharat Nagar": {
+    "lat": 17.4474,
+    "lng": 78.4380,
+    "neighbors": [
+      {"station": "Moosapet", "line": "Red", "time": 2},
+      {"station": "Erragadda", "line": "Red", "time": 2}
+    ]
+  },
+  "Erragadda": {
+    "lat": 17.4435,
+    "lng": 78.4456,
+    "neighbors": [
+      {"station": "Bharat Nagar", "line": "Red", "time": 2},
+      {"station": "ESI Hospital", "line": "Red", "time": 2}
+    ]
+  },
+  "ESI Hospital": {
+    "lat": 17.4406,
+    "lng": 78.4512,
+    "neighbors": [
+      {"station": "Erragadda", "line": "Red", "time": 2},
+      {"station": "SR Nagar", "line": "Red", "time": 2}
+    ]
+  },
+  "SR Nagar": {
+    "lat": 17.4383,
+    "lng": 78.4578,
+    "neighbors": [
+      {"station": "ESI Hospital", "line": "Red", "time": 2},
+      {"station": "Ameerpet", "line": "Red", "time": 3}
+    ]
+  },
+  "Ameerpet": {
+    "lat": 17.4375,
+    "lng": 78.4483,
+    "neighbors": [
+      {"station": "SR Nagar", "line": "Red", "time": 3},
+      {"station": "Begumpet", "line": "Blue", "time": 4},
+      {"station": "Punjagutta", "line": "Red", "time": 2}
+    ]
+  },
+  "Begumpet": {
+    "lat": 17.4370,
+    "lng": 78.4602,
+    "neighbors": [
+      {"station": "Ameerpet", "line": "Blue", "time": 4},
+      {"station": "Rasoolpura", "line": "Blue", "time": 3}
+    ]
+  },
+  "Rasoolpura": {
+    "lat": 17.4408,
+    "lng": 78.4731,
+    "neighbors": [
+      {"station": "Begumpet", "line": "Blue", "time": 3},
+      {"station": "Prakash Nagar", "line": "Blue", "time": 2}
+    ]
+  },
+  "Prakash Nagar": {
+    "lat": 17.4430,
+    "lng": 78.4815,
+    "neighbors": [
+      {"station": "Rasoolpura", "line": "Blue", "time": 2},
+      {"station": "Paradise", "line": "Blue", "time": 2}
+    ]
+  },
+  "Paradise": {
+    "lat": 17.4445,
+    "lng": 78.4891,
+    "neighbors": [
+      {"station": "Prakash Nagar", "line": "Blue", "time": 2},
+      {"station": "Parade Ground", "line": "Blue", "time": 3}
+    ]
+  },
+  "Parade Ground": {
+    "lat": 17.4456,
+    "lng": 78.4982,
+    "neighbors": [
+      {"station": "Paradise", "line": "Blue", "time": 3},
+      {"station": "Secunderabad East", "line": "Blue", "time": 3},
+      {"station": "Parade Ground B", "line": "Green", "time": 5}
+    ]
+  },
+  "Secunderabad East": {
+    "lat": 17.4396,
+    "lng": 78.5039,
+    "neighbors": [
+      {"station": "Parade Ground", "line": "Blue", "time": 3},
+      {"station": "Mettuguda", "line": "Blue", "time": 3}
+    ]
+  },
+  "Mettuguda": {
+    "lat": 17.4356,
+    "lng": 78.5142,
+    "neighbors": [
+      {"station": "Secunderabad East", "line": "Blue", "time": 3},
+      {"station": "Tarnaka", "line": "Blue", "time": 2}
+    ]
+  },
+  "Tarnaka": {
+    "lat": 17.4272,
+    "lng": 78.5284,
+    "neighbors": [
+      {"station": "Mettuguda", "line": "Blue", "time": 2},
+      {"station": "Habsiguda", "line": "Blue", "time": 3}
+    ]
+  },
+  "Habsiguda": {
+    "lat": 17.4210,
+    "lng": 78.5380,
+    "neighbors": [
+      {"station": "Tarnaka", "line": "Blue", "time": 3},
+      {"station": "Nagole", "line": "Blue", "time": 3}
+    ]
+  },
+  "Nagole": {
+    "lat": 17.4137,
+    "lng": 78.5473,
+    "neighbors": [
+      {"station": "Habsiguda", "line": "Blue", "time": 3}
+    ]
+  },
+  "Punjagutta": {
+    "lat": 17.4277,
+    "lng": 78.4469,
+    "neighbors": [
+      {"station": "Ameerpet", "line": "Red", "time": 2},
+      {"station": "Irrum Manzil", "line": "Red", "time": 2}
+    ]
+  },
+  "Irrum Manzil": {
+    "lat": 17.4210,
+    "lng": 78.4556,
+    "neighbors": [
+      {"station": "Punjagutta", "line": "Red", "time": 2},
+      {"station": "Khairatabad", "line": "Red", "time": 2}
+    ]
+  },
+  "Khairatabad": {
+    "lat": 17.4200,
+    "lng": 78.4630,
+    "neighbors": [
+      {"station": "Irrum Manzil", "line": "Red", "time": 2},
+      {"station": "Lakdikapul", "line": "Red", "time": 2}
+    ]
+  },
+  "Lakdikapul": {
+    "lat": 17.4123,
+    "lng": 78.4674,
+    "neighbors": [
+      {"station": "Khairatabad", "line": "Red", "time": 2},
+      {"station": "Assembly", "line": "Red", "time": 2}
+    ]
+  },
+  "Assembly": {
+    "lat": 17.4064,
+    "lng": 78.4697,
+    "neighbors": [
+      {"station": "Lakdikapul", "line": "Red", "time": 2},
+      {"station": "Nampally", "line": "Red", "time": 2}
+    ]
+  },
+  "Nampally": {
+    "lat": 17.3956,
+    "lng": 78.4690,
+    "neighbors": [
+      {"station": "Assembly", "line": "Red", "time": 2},
+      {"station": "Gandhi Bhavan", "line": "Red", "time": 2}
+    ]
+  },
+  "Gandhi Bhavan": {
+    "lat": 17.3915,
+    "lng": 78.4724,
+    "neighbors": [
+      {"station": "Nampally", "line": "Red", "time": 2},
+      {"station": "MG Bus Station", "line": "Red", "time": 2}
+    ]
+  },
+  "MG Bus Station": {
+    "lat": 17.3854,
+    "lng": 78.4749,
+    "neighbors": [
+      {"station": "Gandhi Bhavan", "line": "Red", "time": 2}
+    ]
+  },
+  "Parade Ground B": {
+    "lat": 17.4461,
+    "lng": 78.4990,
+    "neighbors": [
+      {"station": "Parade Ground", "line": "Green", "time": 5}
+    ]
+  }
+}
