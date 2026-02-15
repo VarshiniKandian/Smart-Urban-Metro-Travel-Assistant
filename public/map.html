@@ -1,165 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Metro Navigator</title>
-  <link rel="stylesheet" href="map-style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js CDN -->
-  <style>
-    /* Bottom-left estimated time box */
-    #estimatedTimeDisplay {
-      position: absolute;
-      bottom: 15px;
-      left: 15px;
-      background: rgba(30,30,30,0.9);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-family: 'Consolas', monospace;
-      font-size: 14px;
-      color: #f5f5dc;
-      font-weight: 600;
-      z-index: 1200;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-    }
-
-    /* Chart container hidden by default */
-    #chartContainer {
-      position: absolute;
-      top: 70px;
-      right: 15px;
-      width: 420px;
-      max-height: 70vh;
-      background: rgba(30,30,30,0.95);
-      padding: 15px;
-      border-radius: 10px;
-      overflow-y: auto;
-      display: none;
-      z-index: 1200;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-
-    /* Hamburger menu */
-    #menuContainer {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 1300;
-    }
-    #hamburger {
-      font-size: 28px;
-      cursor: pointer;
-      color: #f5f5dc;
-    }
-    #menuOptions {
-      display: none;
-      position: absolute;
-      top: 35px;
-      left: 0;
-      background-color: #1a1a1a;
-      border: 1px solid #444;
-      border-radius: 8px;
-      min-width: 180px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-    }
-    #menuOptions ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    #menuOptions li {
-      padding: 10px 15px;
-      cursor: pointer;
-      color: #f5f5dc;
-      font-family: 'Consolas', monospace;
-    }
-    #menuOptions li:hover { background-color: #333; }
-
-    canvas {
-      max-width: 100%;
-      margin-bottom: 20px;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <title>Metro Navigator</title>
+    <link rel="stylesheet" href="map-style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <!-- Hamburger Menu -->
-  <div id="menuContainer">
-    <span id="hamburger">&#9776;</span>
-    <div id="menuOptions">
-      <ul>
-        <li id="monthlyStatsOption">Monthly Travel Stats</li>
-        <li id="fareStatsOption">Fare Distribution</li>
-      </ul>
+
+    <button id="menuButton" aria-label="Open menu">&#9776; MENU</button>
+    <div id="menuSidebar" class="sidebar">
+        
+        <div class="sidebar-welcome-header">
+            <p id="welcomeMessage">Welcome!</p>
+        </div>
+        
+        <ul>
+            <li onclick="window.location.href='history.html'">Travel History</li>
+            <li onclick="window.location.href='stats.html'">View Analytics</li>
+            
+            <li><h3>Navigation</h3></li>
+            
+            <li onclick="window.location.href='instructions.html'">Instructions</li>
+            
+            <li class="sidebar-user-info profile-bottom-section">
+                <span id="profileIcon">👤</span>
+                <p id="userDisplay"></p> </li>
+            
+            <li class="sidebar-logout" id="sidebarLogoutBtn">
+                <button class="danger-action-btn" style="width: 90%;">Logout</button>
+            </li>
+        </ul>
     </div>
-  </div>
 
-  <!-- Chart Container -->
-  <div id="chartContainer">
-    <canvas id="monthlyChart"></canvas>
-    <canvas id="farePieChart"></canvas>
-  </div>
-
-  <!-- Top-right section for email/logout/history -->
-  <div class="top-right">
-  <div id="profileContainer">
-    <span id="profileIcon">👤</span>
-    <div id="profileDropdown" class="profile-dropdown">
-      <p id="userEmail">user@example.com</p>
-      <button id="logoutBtn">Logout</button>
+    <div class="top-right">
     </div>
-  </div>
-  <button id="historyBtn">Travel History</button>
-</div>
 
+    <div class="controls" role="region" aria-label="Route controls">
+        <div class="route-controls">
+            <select id="city" aria-label="Select city">
+                <option value="" disabled selected>Select City</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="chennai">Chennai</option>
+                <option value="bengaluru">Bengaluru</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="jaipur">Jaipur</option>
+            </select>
 
-  <!-- Central controls -->
-  <!-- Central controls -->
-<div class="controls">
-  <div class="route-controls">
-    <select id="city">
-      <option value="" disabled selected>Select City</option>
-      <option value="hyderabad">Hyderabad</option>
-      <option value="chennai">Chennai</option>
-    </select>
+            <select id="from" aria-label="From station">
+                <option value="" disabled selected>From Station</option>
+            </select>
 
-    <select id="from">
-      <option value="" disabled selected>From Station</option>
-    </select>
+            <select id="to" aria-label="To station">
+                <option value="" disabled selected>To Station</option>
+            </select>
+        </div>
 
-    <select id="to">
-      <option value="" disabled selected>To Station</option>
-    </select>
-
-    <button id="findRoute">Find Route</button>
-  </div>
-
-  <div class="journey-controls">
-    <button id="startJourney">Start Journey</button>
-    <button id="endJourney">End Journey</button>
-  </div>
-</div>
-
-  <!-- Map -->
-  <div id="map"></div>
-
-  <!-- Travel History Modal -->
-  <div id="historyModal" class="modal">
-    <div class="modal-content">
-      <span id="closeHistory" class="close">&times;</span>
-      <h2>Your Travel History</h2>
-      <div id="historyList" class="history-list"></div>
+        <div class="journey-controls">
+            <button id="findRoute">Start Journey</button>
+            <button id="endJourney">End Journey</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Estimated Time (bottom-left corner) -->
-  <p id="estimatedTimeDisplay">Estimated Time: --</p>
+    <div id="map"></div>
+    
+    <p id="estimatedTimeDisplay">Estimated Time: --</p>
 
-  <script src="auth-check.js"></script>
-  <script src="route-logic.js"></script>
-  <script src="stats-feature.js"></script> <!-- New JS file for charts & menu -->
+    <script src="alerts.js"></script>
+    <script src="auth-check.js"></script>
+    <script src="route-logic.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menuButton');
+            const sidebar = document.getElementById('menuSidebar');
+            const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+
+            sidebarLogoutBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.handleLogout && window.handleLogout();
+            });
+
+            menuButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Reset animations by removing and re-adding active class
+                if (!sidebar.classList.contains('active')) {
+                    // Remove animations first
+                    const menuItems = sidebar.querySelectorAll('li');
+                    menuItems.forEach(item => {
+                        item.style.animation = 'none';
+                    });
+                    
+                    // Force reflow
+                    void sidebar.offsetWidth;
+                    
+                    // Add active class to trigger animations
+                    sidebar.classList.add('active');
+                    
+                    // Re-enable animations
+                    setTimeout(() => {
+                        menuItems.forEach(item => {
+                            item.style.animation = '';
+                        });
+                    }, 10);
+                } else {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            document.getElementById('map').addEventListener('click', () => {
+                sidebar.classList.remove('active');
+            });
+
+            sidebar.querySelectorAll('li').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
+                        setTimeout(() => {
+                            sidebar.classList.remove('active');
+                        }, 200);	
+                    }
+                });
+            });
+            
+            // Global cleanup function for persistent modals on navigation/unload
+            window.addEventListener('beforeunload', () => {
+                document.querySelectorAll('.alert-overlay').forEach(el => {
+                    el.remove();
+                });
+            });
+        });
+    </script>
 </body>
 </html>

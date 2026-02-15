@@ -1,310 +1,41 @@
 {
-  "Chennai Airport": {
-    "lat": 13.041,
-    "lng": 80.174,
-    "neighbors": [
-      {"station": "Meenambakkam", "line": "Blue", "time": 3}
-    ]
-  },
-  "Meenambakkam": {
-    "lat": 13.033,
-    "lng": 80.172,
-    "neighbors": [
-      {"station": "Chennai Airport", "line": "Blue", "time": 3},
-      {"station": "Nanganallur Road", "line": "Blue", "time": 2}
-    ]
-  },
-  "Nanganallur Road": {
-    "lat": 13.026,
-    "lng": 80.174,
-    "neighbors": [
-      {"station": "Meenambakkam", "line": "Blue", "time": 2},
-      {"station": "Guindy", "line": "Blue", "time": 2}
-    ]
-  },
-  "Guindy": {
-    "lat": 13.017,
-    "lng": 80.177,
-    "neighbors": [
-      {"station": "Nanganallur Road", "line": "Blue", "time": 2},
-      {"station": "Little Mount", "line": "Blue", "time": 2}
-    ]
-  },
-  "Little Mount": {
-    "lat": 13.012,
-    "lng": 80.182,
-    "neighbors": [
-      {"station": "Guindy", "line": "Blue", "time": 2},
-      {"station": "Saidapet", "line": "Blue", "time": 2}
-    ]
-  },
-  "Saidapet": {
-    "lat": 13.007,
-    "lng": 80.195,
-    "neighbors": [
-      {"station": "Little Mount", "line": "Blue", "time": 2},
-      {"station": "Nandanam", "line": "Blue", "time": 2}
-    ]
-  },
-  "Nandanam": {
-    "lat": 13.003,
-    "lng": 80.203,
-    "neighbors": [
-      {"station": "Saidapet", "line": "Blue", "time": 2},
-      {"station": "Teynampet", "line": "Blue", "time": 2}
-    ]
-  },
-  "Teynampet": {
-    "lat": 12.999,
-    "lng": 80.209,
-    "neighbors": [
-      {"station": "Nandanam", "line": "Blue", "time": 2},
-      {"station": "AG-DMS", "line": "Blue", "time": 2}
-    ]
-  },
-  "AG-DMS": {
-    "lat": 12.994,
-    "lng": 80.221,
-    "neighbors": [
-      {"station": "Teynampet", "line": "Blue", "time": 2},
-      {"station": "Thousand Lights", "line": "Blue", "time": 2}
-    ]
-  },
-  "Thousand Lights": {
-    "lat": 12.991,
-    "lng": 80.228,
-    "neighbors": [
-      {"station": "AG-DMS", "line": "Blue", "time": 2},
-      {"station": "LIC", "line": "Blue", "time": 2}
-    ]
-  },
-  "LIC": {
-    "lat": 12.988,
-    "lng": 80.236,
-    "neighbors": [
-      {"station": "Thousand Lights", "line": "Blue", "time": 2},
-      {"station": "Government Estate", "line": "Blue", "time": 2}
-    ]
-  },
-  "Government Estate": {
-    "lat": 12.986,
-    "lng": 80.242,
-    "neighbors": [
-      {"station": "LIC", "line": "Blue", "time": 2},
-      {"station": "Central Metro", "line": "Blue", "time": 2}
-    ]
-  },
-  "Central Metro": {
-    "lat": 12.984,
-    "lng": 80.250,
-    "neighbors": [
-      {"station": "Government Estate", "line": "Blue", "time": 2},
-      {"station": "High Court", "line": "Blue", "time": 2}
-    ]
-  },
-  "High Court": {
-    "lat": 12.980,
-    "lng": 80.256,
-    "neighbors": [
-      {"station": "Central Metro", "line": "Blue", "time": 2},
-      {"station": "Mannadi", "line": "Blue", "time": 2}
-    ]
-  },
-  "Mannadi": {
-    "lat": 12.975,
-    "lng": 80.262,
-    "neighbors": [
-      {"station": "High Court", "line": "Blue", "time": 2},
-      {"station": "Washermanpet", "line": "Blue", "time": 3}
-    ]
-  },
-  "Washermanpet": {
-    "lat": 13.095,
-    "lng": 80.283,
-    "neighbors": [
-      {"station": "Mannadi", "line": "Blue", "time": 3},
-      {"station": "Sri Theagaraya College", "line": "Blue", "time": 2}
-    ]
-  },
-  "Sri Theagaraya College": {
-    "lat": 13.098,
-    "lng": 80.287,
-    "neighbors": [
-      {"station": "Washermanpet", "line": "Blue", "time": 2},
-      {"station": "Tondiarpet", "line": "Blue", "time": 2}
-    ]
-  },
-  "Tondiarpet": {
-    "lat": 13.101,
-    "lng": 80.292,
-    "neighbors": [
-      {"station": "Sri Theagaraya College", "line": "Blue", "time": 2},
-      {"station": "New Washermanpet", "line": "Blue", "time": 2}
-    ]
-  },
-  "New Washermanpet": {
-    "lat": 13.104,
-    "lng": 80.296,
-    "neighbors": [
-      {"station": "Tondiarpet", "line": "Blue", "time": 2},
-      {"station": "Tollgate", "line": "Blue", "time": 2}
-    ]
-  },
-  "Tollgate": {
-    "lat": 13.107,
-    "lng": 80.300,
-    "neighbors": [
-      {"station": "New Washermanpet", "line": "Blue", "time": 2},
-      {"station": "Kaladipet", "line": "Blue", "time": 2}
-    ]
-  },
-  "Kaladipet": {
-    "lat": 13.110,
-    "lng": 80.305,
-    "neighbors": [
-      {"station": "Tollgate", "line": "Blue", "time": 2},
-      {"station": "Thiruvottriyur", "line": "Blue", "time": 3}
-    ]
-  },
-  "Thiruvottriyur": {
-    "lat": 13.115,
-    "lng": 80.310,
-    "neighbors": [
-      {"station": "Kaladipet", "line": "Blue", "time": 3},
-      {"station": "Wimco Nagar", "line": "Blue", "time": 3}
-    ]
-  },
-  "Wimco Nagar": {
-    "lat": 13.120,
-    "lng": 80.315,
-    "neighbors": [
-      {"station": "Thiruvottriyur", "line": "Blue", "time": 3},
-      {"station": "Wimco Nagar Depot", "line": "Blue", "time": 1}
-    ]
-  },
-  "Wimco Nagar Depot": {
-    "lat": 13.122,
-    "lng": 80.317,
-    "neighbors": [
-      {"station": "Wimco Nagar", "line": "Blue", "time": 1}
-    ]
-  },
-  "St. Thomas Mount": {
-    "lat": 13.011,
-    "lng": 80.169,
-    "neighbors": [
-      {"station": "Arignar Anna Alandur", "line": "Green", "time": 3}
-    ]
-  },
-  "Arignar Anna Alandur": {
-    "lat": 13.018,
-    "lng": 80.167,
-    "neighbors": [
-      {"station": "St. Thomas Mount", "line": "Green", "time": 3},
-      {"station": "Ekkattuthangal", "line": "Green", "time": 2}
-    ]
-  },
-  "Ekkattuthangal": {
-    "lat": 13.025,
-    "lng": 80.164,
-    "neighbors": [
-      {"station": "Arignar Anna Alandur", "line": "Green", "time": 2},
-      {"station": "Ashok Nagar", "line": "Green", "time": 2}
-    ]
-  },
-  "Ashok Nagar": {
-    "lat": 13.031,
-    "lng": 80.162,
-    "neighbors": [
-      {"station": "Ekkattuthangal", "line": "Green", "time": 2},
-      {"station": "Vadapalani", "line": "Green", "time": 2}
-    ]
-  },
-  "Vadapalani": {
-    "lat": 13.037,
-    "lng": 80.160,
-    "neighbors": [
-      {"station": "Ashok Nagar", "line": "Green", "time": 2},
-      {"station": "Arumbakkam", "line": "Green", "time": 2}
-    ]
-  },
-  "Arumbakkam": {
-    "lat": 13.043,
-    "lng": 80.158,
-    "neighbors": [
-      {"station": "Vadapalani", "line": "Green", "time": 2},
-      {"station": "Puratchi Thalaivi Dr.J. Jayalalithaa CMBT", "line": "Green", "time": 2}
-    ]
-  },
-  "Puratchi Thalaivi Dr.J. Jayalalithaa CMBT": {
-    "lat": 13.049,
-    "lng": 80.156,
-    "neighbors": [
-      {"station": "Arumbakkam", "line": "Green", "time": 2},
-      {"station": "Koyambedu", "line": "Green", "time": 2}
-    ]
-  },
-  "Koyambedu": {
-    "lat": 13.055,
-    "lng": 80.154,
-    "neighbors": [
-      {"station": "Puratchi Thalaivi Dr.J. Jayalalithaa CMBT", "line": "Green", "time": 2},
-      {"station": "Thirumangalam", "line": "Green", "time": 3}
-    ]
-  },
-  "Thirumangalam": {
-    "lat": 13.061,
-    "lng": 80.152,
-    "neighbors": [
-      {"station": "Koyambedu", "line": "Green", "time": 3},
-      {"station": "Anna Nagar Tower", "line": "Green", "time": 2}
-    ]
-  },
-  "Anna Nagar Tower": {
-    "lat": 13.067,
-    "lng": 80.150,
-    "neighbors": [
-      {"station": "Thirumangalam", "line": "Green", "time": 2},
-      {"station": "Anna Nagar East", "line": "Green", "time": 2}
-    ]
-  },
-  "Anna Nagar East": {
-    "lat": 13.073,
-    "lng": 80.148,
-    "neighbors": [
-      {"station": "Anna Nagar Tower", "line": "Green", "time": 2},
-      {"station": "Shenoy Nagar", "line": "Green", "time": 2}
-    ]
-  },
-  "Shenoy Nagar": {
-    "lat": 13.079,
-    "lng": 80.146,
-    "neighbors": [
-      {"station": "Anna Nagar East", "line": "Green", "time": 2},
-      {"station": "Pachaiyappa's College", "line": "Green", "time": 2}
-    ]
-  },
-  "Pachaiyappa's College": {
-    "lat": 13.085,
-    "lng": 80.144,
-    "neighbors": [
-      {"station": "Shenoy Nagar", "line": "Green", "time": 2},
-      {"station": "Kilpauk", "line": "Green", "time": 2}
-    ]
-  },
-  "Kilpauk": {
-    "lat": 13.091,
-    "lng": 80.142,
-    "neighbors": [
-      {"station": "Pachaiyappa's College", "line": "Green", "time": 2},
-      {"station": "Nehru Park Egmore", "line": "Green", "time": 2}
-    ]
-  },
-  "Nehru Park Egmore": {
-    "lat": 13.097,
-    "lng": 80.140,
-    "neighbors": [
-      {"station": "Kilpauk", "line": "Green", "time": 2}
-    ]
-  }
+  "Chennai Airport": {"lat":13.041,"lng":80.174,"neighbors":[{"station":"Meenambakkam","line":"Blue","time":3}]},
+  "Meenambakkam": {"lat":13.033,"lng":80.172,"neighbors":[{"station":"Chennai Airport","line":"Blue","time":3},{"station":"Nanganallur Road","line":"Blue","time":2}]},
+  "Nanganallur Road": {"lat":13.026,"lng":80.174,"neighbors":[{"station":"Meenambakkam","line":"Blue","time":2},{"station":"Guindy","line":"Blue","time":2}]},
+  "Guindy": {"lat":13.017,"lng":80.177,"neighbors":[{"station":"Nanganallur Road","line":"Blue","time":2},{"station":"Little Mount","line":"Blue","time":2},{"station":"St. Thomas Mount","line":"Blue","time":3}]},
+  "Little Mount": {"lat":13.012,"lng":80.182,"neighbors":[{"station":"Guindy","line":"Blue","time":2},{"station":"Saidapet","line":"Blue","time":2}]},
+  "Saidapet": {"lat":13.007,"lng":80.195,"neighbors":[{"station":"Little Mount","line":"Blue","time":2},{"station":"Nandanam","line":"Blue","time":2}]},
+  "Nandanam": {"lat":13.003,"lng":80.203,"neighbors":[{"station":"Saidapet","line":"Blue","time":2},{"station":"Teynampet","line":"Blue","time":2}]},
+  "Teynampet": {"lat":12.999,"lng":80.209,"neighbors":[{"station":"Nandanam","line":"Blue","time":2},{"station":"AG-DMS","line":"Blue","time":2}]},
+  "AG-DMS": {"lat":12.994,"lng":80.221,"neighbors":[{"station":"Teynampet","line":"Blue","time":2},{"station":"Thousand Lights","line":"Blue","time":2}]},
+  "Thousand Lights": {"lat":12.991,"lng":80.228,"neighbors":[{"station":"AG-DMS","line":"Blue","time":2},{"station":"LIC","line":"Blue","time":2}]},
+  "LIC": {"lat":12.988,"lng":80.236,"neighbors":[{"station":"Thousand Lights","line":"Blue","time":2},{"station":"Government Estate","line":"Blue","time":2}]},
+  "Government Estate": {"lat":12.986,"lng":80.242,"neighbors":[{"station":"LIC","line":"Blue","time":2},{"station":"Central Metro","line":"Blue","time":2}]},
+  "Central Metro": {"lat":12.984,"lng":80.250,"neighbors":[{"station":"Government Estate","line":"Blue","time":2},{"station":"High Court","line":"Blue","time":2}]},
+  "High Court": {"lat":12.980,"lng":80.256,"neighbors":[{"station":"Central Metro","line":"Blue","time":2},{"station":"Mannadi","line":"Blue","time":2}]},
+  "Mannadi": {"lat":12.975,"lng":80.262,"neighbors":[{"station":"High Court","line":"Blue","time":2},{"station":"Washermanpet","line":"Blue","time":3}]},
+  "Washermanpet": {"lat":13.095,"lng":80.283,"neighbors":[{"station":"Mannadi","line":"Blue","time":3},{"station":"Sri Theagaraya College","line":"Blue","time":2}]},
+  "Sri Theagaraya College": {"lat":13.098,"lng":80.287,"neighbors":[{"station":"Washermanpet","line":"Blue","time":2},{"station":"Tondiarpet","line":"Blue","time":2}]},
+  "Tondiarpet": {"lat":13.101,"lng":80.292,"neighbors":[{"station":"Sri Theagaraya College","line":"Blue","time":2},{"station":"New Washermanpet","line":"Blue","time":2}]},
+  "New Washermanpet": {"lat":13.104,"lng":80.296,"neighbors":[{"station":"Tondiarpet","line":"Blue","time":2},{"station":"Tollgate","line":"Blue","time":2}]},
+  "Tollgate": {"lat":13.107,"lng":80.300,"neighbors":[{"station":"New Washermanpet","line":"Blue","time":2},{"station":"Kaladipet","line":"Blue","time":2}]},
+  "Kaladipet": {"lat":13.110,"lng":80.305,"neighbors":[{"station":"Tollgate","line":"Blue","time":2},{"station":"Thiruvottriyur","line":"Blue","time":3}]},
+  "Thiruvottriyur": {"lat":13.115,"lng":80.310,"neighbors":[{"station":"Kaladipet","line":"Blue","time":3},{"station":"Wimco Nagar","line":"Blue","time":3}]},
+  "Wimco Nagar": {"lat":13.120,"lng":80.315,"neighbors":[{"station":"Thiruvottriyur","line":"Blue","time":3},{"station":"Wimco Nagar Depot","line":"Blue","time":1}]},
+  "Wimco Nagar Depot": {"lat":13.122,"lng":80.317,"neighbors":[{"station":"Wimco Nagar","line":"Blue","time":1}]},
+  "St. Thomas Mount": {"lat":13.011,"lng":80.169,"neighbors":[{"station":"Arignar Anna Alandur","line":"Green","time":3},{"station":"Guindy","line":"Blue","time":3}]},
+  "Arignar Anna Alandur": {"lat":13.018,"lng":80.167,"neighbors":[{"station":"St. Thomas Mount","line":"Green","time":3},{"station":"Ekkattuthangal","line":"Green","time":2}]},
+  "Ekkattuthangal": {"lat":13.025,"lng":80.164,"neighbors":[{"station":"Arignar Anna Alandur","line":"Green","time":2},{"station":"Ashok Nagar","line":"Green","time":2}]},
+  "Ashok Nagar": {"lat":13.031,"lng":80.162,"neighbors":[{"station":"Ekkattuthangal","line":"Green","time":2},{"station":"Vadapalani","line":"Green","time":2}]},
+  "Vadapalani": {"lat":13.037,"lng":80.160,"neighbors":[{"station":"Ashok Nagar","line":"Green","time":2},{"station":"Arumbakkam","line":"Green","time":2}]},
+  "Arumbakkam": {"lat":13.043,"lng":80.158,"neighbors":[{"station":"Vadapalani","line":"Green","time":2},{"station":"Puratchi Thalaivi Dr.J. Jayalalithaa CMBT","line":"Green","time":2}]},
+  "Puratchi Thalaivi Dr.J. Jayalalithaa CMBT": {"lat":13.049,"lng":80.156,"neighbors":[{"station":"Arumbakkam","line":"Green","time":2},{"station":"Koyambedu","line":"Green","time":2}]},
+  "Koyambedu": {"lat":13.055,"lng":80.154,"neighbors":[{"station":"Puratchi Thalaivi Dr.J. Jayalalithaa CMBT","line":"Green","time":2},{"station":"Thirumangalam","line":"Green","time":3}]},
+  "Thirumangalam": {"lat":13.061,"lng":80.152,"neighbors":[{"station":"Koyambedu","line":"Green","time":3},{"station":"Anna Nagar Tower","line":"Green","time":2}]},
+  "Anna Nagar Tower": {"lat":13.067,"lng":80.150,"neighbors":[{"station":"Thirumangalam","line":"Green","time":2},{"station":"Anna Nagar East","line":"Green","time":2}]},
+  "Anna Nagar East": {"lat":13.073,"lng":80.148,"neighbors":[{"station":"Anna Nagar Tower","line":"Green","time":2},{"station":"Shenoy Nagar","line":"Green","time":2}]},
+  "Shenoy Nagar": {"lat":13.079,"lng":80.146,"neighbors":[{"station":"Anna Nagar East","line":"Green","time":2},{"station":"Pachaiyappa's College","line":"Green","time":2}]},
+  "Pachaiyappa's College": {"lat":13.085,"lng":80.144,"neighbors":[{"station":"Shenoy Nagar","line":"Green","time":2},{"station":"Kilpauk","line":"Green","time":2}]},
+  "Kilpauk": {"lat":13.091,"lng":80.142,"neighbors":[{"station":"Pachaiyappa's College","line":"Green","time":2},{"station":"Nehru Park Egmore","line":"Green","time":2}]},
+  "Nehru Park Egmore": {"lat":13.097,"lng":80.140,"neighbors":[{"station":"Kilpauk","line":"Green","time":2}]}
 }

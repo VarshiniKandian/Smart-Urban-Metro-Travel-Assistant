@@ -1,227 +1,172 @@
-/* ================== Full-screen background ================== */
+/* login-style.css (Full Polished Version - DARK ALERTS) */
+
+/* ================== Full-Screen Background ================== */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Consolas', monospace;
   height: 100vh;
   width: 100vw;
-  background-image: url('images/bg2.jpg'); 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #121212;
+  overflow: hidden;
 }
 
-/* ================== Login Container ================== */
+/* Video Background */
+#video-bg {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  object-fit: cover;
+  transform: scale(1.15);
+  transform-origin: center;
+  opacity: 0.55;
+  filter: brightness(0.8);
+}
+
+/* Login Container */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 20px;
 }
 
-/* ================== Login Card ================== */
+/* Split Container (Glassmorphism card) */
+.split-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: center;
+  max-width: 950px;
+  width: 100%;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  background-color: rgba(25, 25, 25, 0.85);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Login Card */
 .login-card {
-  background-color: rgba(30, 30, 30, 0.8); /* semi-transparent */
+  flex: 1;
+  min-width: 300px;
+  max-width: 380px;
   padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
   text-align: center;
-  width: 350px;
   color: #f5f5dc;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-/* ================== Headings ================== */
 .login-card h1 {
   margin: 0 0 10px;
-  font-size: 28px;
+  font-size: 30px;
   color: #fff;
 }
 
 .login-card p {
   margin: 0 0 25px;
-  font-size: 14px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* ================== Input Fields ================== */
-.input-group {
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-}
-
+/* Inputs */
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display:block; margin-bottom:6px; color: rgba(255,255,255,0.9); font-weight:500; }
 .input-group input {
-  width: 100%;
-  padding: 12px 15px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-size: 16px;
-  font-family: 'Consolas', monospace;
-  box-sizing: border-box;
+  width:100%; padding:12px 15px; border-radius:8px; border:1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03); color:#fff; font-size:16px; box-sizing:border-box;
+  transition: 0.3s ease;
+}
+.input-group input:focus { outline:none; border-color:#f5f5dc; background: rgba(255,255,255,0.06); }
+
+/* NEW: Forgot Password Link Styling */
+.forgot-password {
+    text-align: right; 
+    margin-top: -10px; 
+    margin-bottom: 20px;
 }
 
-.input-group input:focus {
-  outline: none;
-  border-color: #1976d2;
-  background: rgba(255, 255, 255, 0.15);
+.forgot-password a {
+    color: rgba(245, 245, 220, 0.7); 
+    text-decoration: none; 
+    font-size: 14px;
+    transition: color 0.2s ease;
+    display: inline-block;
 }
 
-/* ================== Buttons ================== */
+.forgot-password a:hover {
+    color: #f5f5dc; 
+    text-decoration: underline; 
+}
+
+/* Buttons */
 button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 10px;
+  width:100%; padding:14px; border:none; border-radius:8px; font-size:16px; font-weight:600;
+  cursor:pointer; transition: all 0.25s; margin-bottom:10px; font-family:'Consolas',monospace;
+}
+#loginBtn { background:#f5f5dc; color:#121212; }
+#loginBtn:hover { background:#e0e0b0; transform:translateY(-2px); }
+#signupBtn { background:transparent; color:#f5f5dc; border:1px solid #f5f5dc; }
+#signupBtn:hover { background: rgba(245,245,220,0.15); transform:translateY(-2px); }
+
+/* Error message */
+.error-message { color:#ff5252; margin-top:20px; text-align:center; font-size:14px; min-height:20px; font-weight:500; }
+
+/* Instructions */
+.instructions-container {
+  flex:1; min-width:320px; color:#f5f5dc; padding:25px 30px; border-left:1px solid rgba(255,255,255,0.08);
+}
+.instructions-container h2 { font-size:26px; margin-top:0; margin-bottom:15px; }
+.instructions-container p { font-size:17px; margin-bottom:25px; color:rgba(255,255,255,0.8); }
+.instruction-block h3 { font-size:19px; margin-bottom:10px; }
+.instruction-block ul { list-style:disc; padding-left:20px; margin:0; }
+.instruction-block li { font-size:15px; margin-bottom:10px; color:#f5f5dc; font-weight:500; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .split-container { flex-direction:column; padding: 20px; }
+  .instructions-container { border-left:none; border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; }
+  .login-card h1 { font-size:26px; }
 }
 
-#loginBtn {
-  background: #1976d2;
-  color: white;
+/* ===== iOS-style Alert System (FULL DARK THEME) ===== */
+.alert-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 10000; animation: fadeIn 220ms ease; backdrop-filter: blur(8px);
 }
+.alert-box {
+    background: rgba(25, 25, 25, 0.9);
+    backdrop-filter: blur(15px);
+    border-radius: 16px; padding: 22px; width: 320px; text-align: center;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: popIn 260ms cubic-bezier(.2,.9,.3,1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.alert-icon { font-size: 44px; margin-bottom: 12px; display: inline-block; line-height: 1; }
+.alert-title { font-size: 18px; font-weight:700; margin-bottom:8px; color:#f5f5dc; }
+.alert-message { font-size:15px; color:#ccc; margin-bottom:18px; line-height: 1.45; }
+.alert-buttons { display:flex; gap:10px; justify-content:center; }
+.alert-button { flex:1; padding:12px 14px; border-radius:12px; font-weight:700; border:none; cursor:pointer; }
+.alert-button.primary { background: linear-gradient(180deg,#007aff,#0061d5); color:#fff; }
+.alert-button.secondary { background: rgba(255,255,255,0.12); color:#007aff; }
+.alert-error .alert-icon { color: #ef4444; }
+.alert-success .alert-icon { color: #10b981; }
+.alert-loading .alert-icon { color: #7c3aed; }
 
-#loginBtn:hover {
-  background: #1a84f3;
-}
-
-#signupBtn {
-  background: transparent;
-  color: #1976d2;
-  border: 1px solid #1976d2;
-}
-
-#signupBtn:hover {
-  background: rgba(25, 118, 210, 0.1);
-}
-
-/* ================== Error Message ================== */
-.error-message {
-  color: #ff5252;
-  margin-top: 20px;
-  text-align: center;
-  font-size: 14px;
-  min-height: 20px;
-}
-
-/* ================== Top-right user box ================== */
-.top-right {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(40,40,40,0.85);
-  padding: 10px 14px;
-  border-radius: 8px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-}
-
-#historyBtn {
-  background: #1976d2;
-  color: white;
-}
-
-#historyBtn:hover {
-  background: #1a84f3;
-}
-
-.top-right span {
-  font-size: 14px;
-  color: #e0e0e0;
-  margin-right: 6px;
-}
-
-/* ================== Travel History Modal ================== */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: rgba(30,30,30,0.95);
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  max-height: 70vh;
-  overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.1);
-  font-family: 'Consolas', 'Monaco', monospace;
-  color: white;
-}
-
-.modal-content h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #90caf9;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 8px;
-}
-
-.close {
-  float: right;
-  font-size: 22px;
-  cursor: pointer;
-  color: #bbb;
-}
-
-.close:hover {
-  color: white;
-}
-
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.history-item {
-  background: rgba(50,50,50,0.85);
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-.history-item strong {
-  color: #ffeb3b;
-}
-
-.history-item small {
-  display: block;
-  color: #aaa;
-  margin-top: 4px;
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popIn { from { transform: translateY(16px) scale(0.98); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }

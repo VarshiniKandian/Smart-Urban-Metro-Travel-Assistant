@@ -1,0 +1,75 @@
+{
+  "Mansarovar": {
+    "lat": 26.8851, "lng": 75.7603,
+    "neighbors": [{ "station": "New Aatish Market", "line": "Pink", "time": 2 }]
+  },
+  "New Aatish Market": {
+    "lat": 26.8901, "lng": 75.7732,
+    "neighbors": [
+      { "station": "Mansarovar", "line": "Pink", "time": 2 },
+      { "station": "Vivek Vihar", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Vivek Vihar": {
+    "lat": 26.8965, "lng": 75.7841,
+    "neighbors": [
+      { "station": "New Aatish Market", "line": "Pink", "time": 2 },
+      { "station": "Shyam Nagar", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Shyam Nagar": {
+    "lat": 26.9000, "lng": 75.7895,
+    "neighbors": [
+      { "station": "Vivek Vihar", "line": "Pink", "time": 2 },
+      { "station": "Ram Nagar", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Ram Nagar": {
+    "lat": 26.9062, "lng": 75.7960,
+    "neighbors": [
+      { "station": "Shyam Nagar", "line": "Pink", "time": 2 },
+      { "station": "Civil Lines", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Civil Lines": {
+    "lat": 26.9128, "lng": 75.8025,
+    "neighbors": [
+      { "station": "Ram Nagar", "line": "Pink", "time": 2 },
+      { "station": "Railway Station", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Railway Station": {
+    "lat": 26.9184, "lng": 75.8100,
+    "neighbors": [
+      { "station": "Civil Lines", "line": "Pink", "time": 2 },
+      { "station": "Sindhi Camp", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Sindhi Camp": {
+    "lat": 26.9230, "lng": 75.8180,
+    "neighbors": [
+      { "station": "Railway Station", "line": "Pink", "time": 2 },
+      { "station": "Chandpole", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Chandpole": {
+    "lat": 26.9266, "lng": 75.8079,
+    "neighbors": [
+      { "station": "Sindhi Camp", "line": "Pink", "time": 2 },
+      { "station": "Choti Chaupar", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Choti Chaupar": {
+    "lat": 26.9247, "lng": 75.8185,
+    "neighbors": [
+      { "station": "Chandpole", "line": "Pink", "time": 2 },
+      { "station": "Badi Chaupar", "line": "Pink", "time": 2 }
+    ]
+  },
+  "Badi Chaupar": {
+    "lat": 26.9270, "lng": 75.8268,
+    "neighbors": [
+      { "station": "Choti Chaupar", "line": "Pink", "time": 2 }
+    ]
+  }
+}

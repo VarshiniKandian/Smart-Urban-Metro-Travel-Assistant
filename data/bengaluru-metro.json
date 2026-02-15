@@ -1,0 +1,41 @@
+{
+  "Whitefield": {"lat":12.9698,"lng":77.7503,"neighbors":[{"station":"Kundalahalli","line":"Purple","time":3}]},
+  "Kundalahalli": {"lat":12.9693,"lng":77.7613,"neighbors":[{"station":"Whitefield","line":"Purple","time":3},{"station":"Hoodi Junction","line":"Purple","time":2}]},
+  "Hoodi Junction": {"lat":12.9616,"lng":77.7681,"neighbors":[{"station":"Kundalahalli","line":"Purple","time":2},{"station":"Garudacharapalya","line":"Purple","time":2}]},
+  "Garudacharapalya": {"lat":12.9552,"lng":77.7755,"neighbors":[{"station":"Hoodi Junction","line":"Purple","time":2},{"station":"Mahadevapura","line":"Purple","time":2}]},
+  "Mahadevapura": {"lat":12.9510,"lng":77.7785,"neighbors":[{"station":"Garudacharapalya","line":"Purple","time":2},{"station":"KR Puram","line":"Purple","time":3}]},
+  "KR Puram": {"lat":12.9699,"lng":77.7499,"neighbors":[{"station":"Mahadevapura","line":"Purple","time":3},{"station":"Swami Vivekananda Road","line":"Purple","time":4},{"station":"Majestic","line":"Purple","time":3}]},
+  "Swami Vivekananda Road": {"lat":12.9824,"lng":77.6289,"neighbors":[{"station":"KR Puram","line":"Purple","time":4},{"station":"Indiranagar","line":"Purple","time":3}]},
+  "Indiranagar": {"lat":12.9785,"lng":77.6407,"neighbors":[{"station":"Swami Vivekananda Road","line":"Purple","time":3},{"station":"Halasuru","line":"Purple","time":3}]},
+  "Halasuru": {"lat":12.9716,"lng":77.6472,"neighbors":[{"station":"Indiranagar","line":"Purple","time":3},{"station":"Trinity","line":"Purple","time":2}]},
+  "Trinity": {"lat":12.9700,"lng":77.6521,"neighbors":[{"station":"Halasuru","line":"Purple","time":2},{"station":"MG Road","line":"Purple","time":2}]},
+  "MG Road": {"lat":12.9718,"lng":77.6368,"neighbors":[{"station":"Trinity","line":"Purple","time":2},{"station":"Cubbon Park","line":"Purple","time":2}]},
+  "Cubbon Park": {"lat":12.9762,"lng":77.6075,"neighbors":[{"station":"MG Road","line":"Purple","time":2},{"station":"Vidhana Soudha","line":"Purple","time":2}]},
+  "Vidhana Soudha": {"lat":12.9790,"lng":77.6060,"neighbors":[{"station":"Cubbon Park","line":"Purple","time":2},{"station":"Sir M Visvesvaraya Station","line":"Purple","time":2}]},
+  "Sir M Visvesvaraya Station": {"lat":12.9820,"lng":77.6080,"neighbors":[{"station":"Vidhana Soudha","line":"Purple","time":2},{"station":"Baiyappanahalli","line":"Purple","time":3}]},
+  "Baiyappanahalli": {"lat":12.9980,"lng":77.6400,"neighbors":[{"station":"Sir M Visvesvaraya Station","line":"Purple","time":3}]},
+
+  "Mysore Road": {"lat":12.9355,"lng":77.5445,"neighbors":[{"station":"Nayandahalli","line":"Green","time":4}]},
+  "Nayandahalli": {"lat":12.9445,"lng":77.5450,"neighbors":[{"station":"Mysore Road","line":"Green","time":4},{"station":"Rajarajeshwari Nagar","line":"Green","time":3}]},
+  "Rajarajeshwari Nagar": {"lat":12.9525,"lng":77.5472,"neighbors":[{"station":"Nayandahalli","line":"Green","time":3},{"station":"Deepanjali Nagar","line":"Green","time":2}]},
+  "Deepanjali Nagar": {"lat":12.9592,"lng":77.5475,"neighbors":[{"station":"Rajarajeshwari Nagar","line":"Green","time":2},{"station":"Rajajinagar","line":"Green","time":3}]},
+  "Rajajinagar": {"lat":13.0061,"lng":77.5504,"neighbors":[{"station":"Deepanjali Nagar","line":"Green","time":3},{"station":"Sampige Road","line":"Green","time":2},{"station":"Mahalakshmi","line":"Green","time":2}]},
+  "Sampige Road": {"lat":12.9988,"lng":77.5530,"neighbors":[{"station":"Rajajinagar","line":"Green","time":2},{"station":"Majestic","line":"Green","time":2}]},
+  "Majestic": {"lat":12.9762,"lng":77.5600,"neighbors":[{"station":"Sampige Road","line":"Green","time":2},{"station":"KR Puram","line":"Purple","time":3}]},
+
+  "Yelachenahalli": {"lat":12.9270,"lng":77.5700,"neighbors":[{"station":"Jayanagar","line":"Green","time":4},{"station":"Rashtreeya Vidyalaya Road","line":"Green","time":3}]},
+  "Jayanagar": {"lat":12.9390,"lng":77.5685,"neighbors":[{"station":"Banashankari","line":"Green","time":3},{"station":"Yelachenahalli","line":"Green","time":4}]},
+  "Banashankari": {"lat":12.9385,"lng":77.5760,"neighbors":[{"station":"Rashtreeya Vidyalaya Road","line":"Green","time":3},{"station":"Jayanagar","line":"Green","time":3}]},
+  "Rashtreeya Vidyalaya Road": {"lat":12.9271,"lng":77.5810,"neighbors":[{"station":"Banashankari","line":"Green","time":3},{"station":"Yelachenahalli","line":"Green","time":2},{"station":"Mysore Road","line":"Green","time":5}]},
+
+  "Peenya": {"lat":13.0486,"lng":77.5196,"neighbors":[{"station":"Peenya Industry","line":"Green","time":2},{"station":"Yeshwanthpur","line":"Green","time":2}]},
+  "Peenya Industry": {"lat":13.0615,"lng":77.5375,"neighbors":[{"station":"Jalahalli","line":"Green","time":2},{"station":"Peenya","line":"Green","time":2}]},
+  "Jalahalli": {"lat":13.0878,"lng":77.5527,"neighbors":[{"station":"Dasarahalli","line":"Green","time":3},{"station":"Peenya Industry","line":"Green","time":2}]},
+  "Dasarahalli": {"lat":13.1167,"lng":77.5675,"neighbors":[{"station":"Nagasandra","line":"Green","time":3},{"station":"Jalahalli","line":"Green","time":3}]},
+  "Nagasandra": {"lat":13.1348,"lng":77.5731,"neighbors":[{"station":"Dasarahalli","line":"Green","time":3},{"station":"Madavara","line":"Green","time":4}]},
+  "Madavara": {"lat":13.1470,"lng":77.5160,"neighbors":[{"station":"Nagasandra","line":"Green","time":4},{"station":"Mysore Road","line":"Green","time":8}]},
+
+  "Yeshwanthpur": {"lat":13.0318,"lng":77.5675,"neighbors":[{"station":"Peenya","line":"Green","time":2},{"station":"Sandal Soap Factory","line":"Green","time":2}]},
+  "Sandal Soap Factory": {"lat":13.0255,"lng":77.5638,"neighbors":[{"station":"Yeshwanthpur","line":"Green","time":2},{"station":"Mahalakshmi","line":"Green","time":2}]},
+  "Mahalakshmi": {"lat":13.0166,"lng":77.5500,"neighbors":[{"station":"Sandal Soap Factory","line":"Green","time":2},{"station":"Rajajinagar","line":"Green","time":2}]}
+}

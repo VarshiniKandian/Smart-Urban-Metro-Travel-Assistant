@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metro Navigator Instructions</title>
+  <style>
+    body {
+      font-family: "Consolas", "Monaco", "Courier New", monospace;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      max-width: 1200px;
+      width: 95%;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+    }
+
+    h1 {
+      color: #4caf50;
+      text-align: center;
+      font-weight: 600;
+      border-bottom: 1px solid #333;
+      width: 100%;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+
+    .back-button {
+      background-color: #333;
+      color: white;
+      padding: 10px 25px;
+      text-decoration: none;
+      border-radius: 6px;
+      border: 1px solid #444;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      position: absolute;
+      top: 37px;
+      left: 168px;
+    }
+
+    .back-button:hover {
+      background-color: #4a4a4a;
+    }
+
+    .instruction-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      width: 100%;
+      height: 100%;
+      gap: 20px;
+      padding-top: 20px;
+      box-sizing: border-box;
+    }
+
+    .section {
+      background-color: #1b1b1b;
+      flex: 1;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    h2 {
+      color: #2196f3;
+      margin-bottom: 15px;
+      border-left: 3px solid #2196f3;
+      padding-left: 10px;
+      font-weight: 500;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    li {
+      background-color: #252525;
+      border: 1px solid #333;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      padding: 10px 15px;
+      font-size: 0.95em;
+      transition: background-color 0.3s;
+    }
+
+    li:hover {
+      background-color: #2a2a2a;
+    }
+
+    .ui-element {
+      background-color: #2d2d2d;
+      color: #569cd6;
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid #3c3c3c;
+    }
+
+    @media (max-width: 1000px) {
+      .instruction-grid {
+        flex-direction: column;
+        height: auto;
+      }
+      body {
+        overflow-y: auto;
+      }
+      .container {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="map.html" class="back-button">← Go to Map</a>
+
+  <div class="container">
+    <h1>METRO MATE INSTRUCTIONS</h1>
+
+    <div class="instruction-grid">
+      <!-- Section 1 -->
+      <div class="section">
+        <h2>Getting Started</h2>
+        <ul>
+          <li><strong>1. Select City:</strong> Choose your metro city from the <span class="ui-element">City</span> dropdown to load relevant network data.</li>
+          <li><strong>2. Pick Stations:</strong> Select your <span class="ui-element">From Station</span> and <span class="ui-element">To Station</span>. The system validates your inputs to ensure they’re within the chosen city’s metro map.</li>
+          <li><strong>3. Start Journey:</strong> Click the <span class="ui-element">Start Journey</span> button. The app will instantly calculate the shortest, fastest, and most cost-effective route between the selected stations.</li>
+          <li><strong>4. Route Visualization:</strong> Your route will be displayed on an interactive map with color-coded metro lines, interchange stations, and estimated travel time.</li>
+        </ul>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="section">
+        <h2>Managing Your Journey</h2>
+        <ul>
+          <li><strong>Start Journey:</strong> Begins the route computation using metro network data and Dijkstra’s Algorithm for optimal pathfinding.</li>
+          <li><strong>Track Fare & Time:</strong> Displays estimated fare and travel duration for the complete route, helping you plan efficiently before traveling.</li>
+          <li><strong>End Journey:</strong> Marks your travel as complete and logs it securely into your user history for analytics and recordkeeping.</li>
+          <li><strong>Reverse Route:</strong> Tap the reverse icon to instantly generate the route from your destination back to your source.</li>
+        </ul>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="section">
+        <h2>Menu Sidebar (☰)</h2>
+        <ul>
+          <li><strong>Travel History:</strong> Displays your previous metro trips with fare, duration, and route summaries — helping you track commuting habits.</li>
+          <li><strong>Analytics Dashboard:</strong> View charts showing your most visited stations, total trips, and fare distribution, powered by your travel data.</li>
+          <li><strong>Settings & Updates:</strong> Customize preferences and manage your account securely. Admins can add or update metro station data here.</li>
+          <li><strong>Logout:</strong> Use this option to securely sign out and clear your session.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

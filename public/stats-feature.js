@@ -1,213 +1,188 @@
+// stats-feature.js (Streamlined to render only the original 4 charts)
 document.addEventListener('DOMContentLoaded', () => {
-  const hamburger = document.getElementById("hamburger");
-  const menuOptions = document.getElementById("menuOptions");
-  const chartContainer = document.getElementById("chartContainer");
-  const monthlyChartCanvas = document.getElementById("monthlyChart");
-  const farePieChartCanvas = document.getElementById("farePieChart");
-  const mapDiv = document.getElementById("map");
-
-  let monthlyChart, farePieChart;
-
-  // Toggle hamburger menu
-  hamburger.addEventListener('click', () => {
-    menuOptions.style.display = menuOptions.style.display === 'block' ? 'none' : 'block';
-  });
-
-  // Hide menu when clicking outside
-  window.addEventListener('click', (e) => {
-    if (!menuOptions.contains(e.target) && e.target !== hamburger && !chartContainer.contains(e.target)) {
-      menuOptions.style.display = 'none';
-      chartContainer.style.display = 'none';
-      if(monthlyChart) monthlyChart.destroy();
-      if(farePieChart) farePieChart.destroy();
+  // Check if we are on the dedicated stats page by looking for a unique element
+  if (!document.getElementById("monthlyChart")) {
+    return;
+  }
+  
+  // --- WAIT FOR AUTHENTICATION STATE BEFORE PROCEEDING ---
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) {
+      // If user is not logged in after check, show alert and redirect
+      alertManager.error("Please log in to view analytics.", "Authentication Required");
+      setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+      return;
     }
-  });
 
-  // Hide chart when clicking on the map
-  mapDiv.addEventListener('click', () => {
-    chartContainer.style.display = 'none';
-    if(monthlyChart) monthlyChart.destroy();
-    if(farePieChart) farePieChart.destroy();
-  });
+    // --- USER IS LOGGED IN: PROCEED TO RENDER CHARTS ---
+    const monthlyChartCanvas = document.getElementById("monthlyChart");
+    const farePieChartCanvas = document.getElementById("farePieChart");
+    const dailyChartCanvas = document.getElementById("dailyChart");
+    const stationChartCanvas = document.getElementById("stationChart");
+    
+    let monthlyChart, farePieChart, dailyChart, stationChart;
+    const userId = user.uid;
+    
+    // --- Core Data Fetching ---
+    async function fetchTravelHistory(uid) {
+      const loadingAlert = alertManager.loading('Fetching all travel data...');
+      try {
+          const snapshot = await firebase.firestore()
+            .collection("journeys")
+            .where("userId", "==", uid)
+            .get();
+          
+          loadingAlert.close();
+          if (snapshot.empty) {
+              alertManager.info("No travel data found.", "No Trips Logged");
+              return [];
+          }
 
-  // Fetch user's journeys from Firestore
-  async function fetchTravelHistory(userId) {
-    const snapshot = await firebase.firestore()
-      .collection("journeys")
-      .where("userId", "==", userId)
-      .get();
+          alertManager.toastSuccess(`Loaded ${snapshot.docs.length} trip records.`);
+          return snapshot.docs.map(doc => {
+            const data = doc.data();
+            const date = data.startTime && data.startTime.toDate ? data.startTime.toDate().toISOString().slice(0,10) : new Date().toISOString().slice(0,10);
 
-    return snapshot.docs.map(doc => {
-      const data = doc.data();
-      return {
-        from: data.fromStation,
-        to: data.toStation,
-        date: data.startTime.toDate().toISOString().slice(0,10),
-        fare: data.fare || 0,
-        totalTime: data.totalTime || 0
-      };
-    });
-  }
-
-  // Process monthly stats
-  function getMonthlyStats(trips) {
-    const monthStats = {};
-    trips.forEach(trip => {
-      const month = trip.date.slice(0,7);
-      if(!monthStats[month]){
-        monthStats[month] = { trips: 0, totalFare: 0 };
+            return {
+              from: data.fromStation,
+              to: data.toStation,
+              date: date,
+              // Ensure values are explicitly converted to Number
+              fare: Number(data.fare) || 0,
+              totalTime: Number(data.totalTime) || 0
+            };
+          });
+      } catch (error) {
+          loadingAlert.close();
+          console.error("Analytics fetch error:", error);
+          alertManager.error("Failed to load statistics: " + error.message);
+          return [];
       }
-      monthStats[month].trips += 1;
-      monthStats[month].totalFare += trip.fare;
-    });
-    return monthStats;
-  }
+    }
 
-  // Process daily stats
-  function getDailyStats(trips) {
-    const dayStats = {};
-    trips.forEach(trip => {
-      const day = trip.date;
-      if(!dayStats[day]) dayStats[day] = 0;
-      dayStats[day] += 1;
-    });
-    return dayStats;
-  }
-
-  // Process station stats
-  function getStationStats(trips) {
-    const stationCounts = {};
-    trips.forEach(trip => {
-      if(trip.from) stationCounts[trip.from] = (stationCounts[trip.from] || 0) + 1;
-      if(trip.to) stationCounts[trip.to] = (stationCounts[trip.to] || 0) + 1;
-    });
-    return stationCounts;
-  }
-
-  // Show monthly bar chart
-  async function showMonthlyChart() {
-    chartContainer.style.display = 'block';
-    const userId = firebase.auth().currentUser.uid;
     const trips = await fetchTravelHistory(userId);
-    const monthStats = getMonthlyStats(trips);
+    if (trips.length === 0) return;
 
-    const labels = Object.keys(monthStats).sort();
-    const data = labels.map(m => monthStats[m].trips);
 
-    if(monthlyChart) monthlyChart.destroy();
+    // --- Data Processing Functions (Original 4) ---
+    function getMonthlyStats(trips) {
+      const monthStats = {};
+      trips.forEach(trip => {
+        const month = trip.date.slice(0,7);
+        if(!monthStats[month]){ monthStats[month] = { trips: 0, totalFare: 0 }; }
+        monthStats[month].trips += 1;
+        monthStats[month].totalFare += trip.fare;
+      });
+      return monthStats;
+    }
+    
+    function getDailyStats(trips) {
+      const dayStats = {};
+      trips.forEach(trip => {
+        const day = trip.date;
+        if(!dayStats[day]) dayStats[day] = 0;
+        dayStats[day] += 1;
+      });
+      return dayStats;
+    }
+    
+    function getStationStats(trips) {
+      const stationCounts = {};
+      trips.forEach(trip => {
+        const from = trip.from;
+        const to = trip.to;
+        if(from) stationCounts[from] = (stationCounts[from] || 0) + 1;
+        if(to && from !== to) stationCounts[to] = (stationCounts[to] || 0) + 1;
+      });
+      return stationCounts;
+    }
 
-    monthlyChart = new Chart(monthlyChartCanvas, {
-      type: 'bar',
-      data: { labels, datasets: [{ label: 'Number of Trips', data, backgroundColor: 'rgba(54, 162, 235, 0.7)' }] },
-      options: {
+    // --- Chart Rendering ---
+    
+    // Chart.js Default Settings (Dark Theme)
+    Chart.defaults.color = '#ccc';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+    const chartOptions = {
         responsive: true,
-        plugins: { legend: { display: false }, tooltip: { enabled: true, mode: 'index', intersect: false } },
-        interaction: { mode: 'nearest', axis: 'x', intersect: false }
-      }
-    });
-  }
+        maintainAspectRatio: false, 
+        plugins: {
+            legend: { labels: { color: '#ccc' } },
+            title: { display: false },
+            tooltip: { enabled: true }
+        },
+        scales: {
+            x: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+            y: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+        }
+    };
+    
+    // 1. Monthly Trips Chart (Bar)
+    (function renderMonthlyChart() {
+      const monthStats = getMonthlyStats(trips);
+      const labels = Object.keys(monthStats).sort();
+      const data = labels.map(m => monthStats[m].trips);
 
-  // Show fare distribution pie chart
-  async function showFarePieChart() {
-    chartContainer.style.display = 'block';
-    const userId = firebase.auth().currentUser.uid;
-    const trips = await fetchTravelHistory(userId);
-    const monthStats = getMonthlyStats(trips);
+      monthlyChart = new Chart(monthlyChartCanvas, {
+        type: 'bar',
+        data: { labels, datasets: [{ label: 'Number of Trips', data, backgroundColor: 'rgba(54, 162, 235, 0.7)' }] },
+        options: { ...chartOptions, scales: { x: { ...chartOptions.scales.x }, y: { ...chartOptions.scales.y, beginAtZero: true } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+      });
+    })();
 
-    const labels = Object.keys(monthStats).sort();
-    const data = labels.map(m => monthStats[m].totalFare);
+    // 2. Fare Distribution Chart (Pie)
+    (function renderFarePieChart() {
+      const monthStats = getMonthlyStats(trips);
+      const labels = Object.keys(monthStats).sort();
+      const data = labels.map(m => monthStats[m].totalFare);
 
-    if(farePieChart) farePieChart.destroy();
+      farePieChart = new Chart(farePieChartCanvas, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Total Fare Spent (₹)',
+            data: data,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)',
+              'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)'
+            ]
+          }]
+        },
+        options: { ...chartOptions, scales: {}, plugins: { ...chartOptions.plugins } }
+      });
+    })();
 
-    farePieChart = new Chart(farePieChartCanvas, {
-      type: 'pie',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Fare Distribution',
-          data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
-            'rgba(75, 192, 192, 0.6)',
-            'rgba(153, 102, 255, 0.6)',
-            'rgba(255, 159, 64, 0.6)'
-          ]
-        }]
-      },
-      options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { enabled: true } } }
-    });
-  }
+    // 3. Daily Trips Chart (Line)
+    (function renderDailyChart() {
+      const dayStats = getDailyStats(trips);
+      const labels = Object.keys(dayStats).sort();
+      const data = labels.map(d => dayStats[d]);
 
-  // Show daily trips bar chart
-  async function showDailyChart() {
-    chartContainer.style.display = 'block';
-    const userId = firebase.auth().currentUser.uid;
-    const trips = await fetchTravelHistory(userId);
-    const dayStats = getDailyStats(trips);
+      dailyChart = new Chart(dailyChartCanvas, {
+        type: 'line',
+        data: { labels, datasets: [{ label: 'Trips per Day', data, backgroundColor: 'rgba(255, 159, 64, 0.7)', borderColor: 'rgba(255, 159, 64, 1)', tension: 0.3, fill: true }] },
+        options: { ...chartOptions, scales: { x: { ...chartOptions.scales.x }, y: { ...chartOptions.scales.y, beginAtZero: true } }, plugins: { ...chartOptions.plugins, legend: { display: false } } }
+      });
+    })();
+    
+    // 4. Most Visited Stations Chart (Doughnut)
+    (function renderStationChart() {
+      const stationStats = getStationStats(trips);
+      const sortedStations = Object.entries(stationStats).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      const labels = sortedStations.map(s=>s[0]);
+      const data = sortedStations.map(s=>s[1]);
 
-    const labels = Object.keys(dayStats).sort();
-    const data = labels.map(d => dayStats[d]);
-
-    if(monthlyChart) monthlyChart.destroy();
-    if(farePieChart) farePieChart.destroy();
-
-    monthlyChart = new Chart(monthlyChartCanvas, {
-      type: 'bar',
-      data: { labels, datasets: [{ label: 'Trips per Day', data, backgroundColor: 'rgba(255, 159, 64, 0.7)' }] },
-      options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } }, interaction: { mode: 'nearest', axis: 'x', intersect: false } }
-    });
-  }
-
-  // Show top stations pie chart
-  async function showStationChart() {
-    chartContainer.style.display = 'block';
-    const userId = firebase.auth().currentUser.uid;
-    const trips = await fetchTravelHistory(userId);
-    const stationStats = getStationStats(trips);
-
-    const sortedStations = Object.entries(stationStats).sort((a,b)=>b[1]-a[1]).slice(0,10);
-    const labels = sortedStations.map(s=>s[0]);
-    const data = sortedStations.map(s=>s[1]);
-
-    if(farePieChart) farePieChart.destroy();
-    if(monthlyChart) monthlyChart.destroy();
-
-    farePieChart = new Chart(farePieChartCanvas, {
-      type: 'pie',
-      data: { labels, datasets: [{ label: 'Number of times visited', data, backgroundColor: [
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
-        'rgba(255, 206, 86, 0.6)',
-        'rgba(75, 192, 192, 0.6)',
-        'rgba(153, 102, 255, 0.6)',
-        'rgba(255, 159, 64, 0.6)',
-        'rgba(199, 199, 199,0.6)',
-        'rgba(83,102,255,0.6)',
-        'rgba(255,102,255,0.6)',
-        'rgba(102,255,102,0.6)'
-      ] }] },
-      options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { enabled: true } } }
-    });
-  }
-
-  // Event listeners for menu options
-  document.getElementById("monthlyStatsOption").addEventListener("click", showMonthlyChart);
-  document.getElementById("fareStatsOption").addEventListener("click", showFarePieChart);
-
-  const ul = menuOptions.querySelector("ul");
-
-  const dailyLi = document.createElement("li");
-  dailyLi.innerText = "Daily Travel Stats";
-  dailyLi.id = "dailyStatsOption";
-  ul.appendChild(dailyLi);
-
-  const topStationsLi = document.createElement("li");
-  topStationsLi.innerText = "Most Visited Stations";
-  topStationsLi.id = "topStationsOption";
-  ul.appendChild(topStationsLi);
-
-  document.getElementById("dailyStatsOption").addEventListener("click", showDailyChart);
-  document.getElementById("topStationsOption").addEventListener("click", showStationChart);
-});
+      stationChart = new Chart(stationChartCanvas, {
+        type: 'doughnut',
+        data: { labels, datasets: [{ label: 'Visits', data, backgroundColor: [
+          'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)',
+          'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
+          'rgba(199, 199, 199,0.8)', 'rgba(83,102,255,0.8)', 'rgba(255,102,255,0.8)', 'rgba(102,255,102,0.8)'
+        ] }] },
+        options: { ...chartOptions, scales: {}, plugins: { ...chartOptions.plugins, legend: { position: 'right', labels: { color: '#ccc' } } } }
+      });
+    })();
+    
+  }); // End of onAuthStateChanged
+}); // End of DOMContentLoaded

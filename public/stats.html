@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metro Navigator - Analytics</title>
+  <link rel="stylesheet" href="map-style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #f5f5dc;
+      font-family: 'Consolas', monospace;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* --- Updated Header Bar --- */
+    .stats-header-bar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 8px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 55px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+    }
+
+    .stats-header-bar h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #f5f5dc;
+      font-weight: 700;
+      letter-spacing: 1px;
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 200px;
+      padding-left: 30px; /* pushes button to right */
+    }
+
+    .primary-action-btn {
+      background: linear-gradient(135deg, #1a73e8, #4285f4);
+      color: white;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Consolas', monospace;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .primary-action-btn:hover {
+      background: linear-gradient(135deg, #2b86f7, #5ba8ff);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(91, 168, 255, 0.4);
+    }
+
+    /* --- 2x2 Grid Layout --- */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 25px;
+      width: 100%;
+      padding: 80px 40px 40px 40px;
+      box-sizing: border-box;
+    }
+
+    .chart-card {
+      background: rgba(30, 30, 30, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-height: 350px;
+    }
+
+    .chart-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .chart-card h2 {
+      margin: 0 0 6px 0;
+      font-size: 16px;
+      text-align: center;
+      color: #f5f5dc;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+      padding-bottom: 4px;
+    }
+
+    .chart-container {
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chart-card canvas {
+      width: 90% !important;
+      height: 85% !important;
+    }
+
+    /* For smaller screens */
+    @media (max-width: 1000px) {
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="stats-header-bar">
+    <div class="header-actions">
+      <button id="goToMapBtn" class="primary-action-btn">← Go to Map</button>
+    </div>
+    <h1>Metro - Travel Analytics</h1>
+    <div style="width: 150px;"></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h2>Monthly Travel Overview (Trips)</h2>
+      <div class="chart-container">
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h2>Fare Distribution (Total Spend)</h2>
+      <div class="chart-container">
+        <canvas id="farePieChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h2>Daily Trip Count</h2>
+      <div class="chart-container">
+        <canvas id="dailyChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h2>Top 10 Visited Stations</h2>
+      <div class="chart-container">
+        <canvas id="stationChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="alerts.js"></script>
+  <script src="auth-check.js"></script>
+  <script src="stats-feature.js"></script>
+
+  <script>
+    document.getElementById('goToMapBtn').addEventListener('click', () => {
+      window.location.href = 'map.html';
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Analytics page loaded');
+    });
+  </script>
+
+</body>
+</html>

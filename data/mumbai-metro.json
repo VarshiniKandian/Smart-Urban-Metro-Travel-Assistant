@@ -1,0 +1,77 @@
+{
+  "Versova": {
+    "lat": 19.1340, "lng": 72.8261,
+    "neighbors": [
+      { "station": "DN Nagar", "line": "Blue", "time": 3 }
+    ]
+  },
+  "DN Nagar": {
+    "lat": 19.1295, "lng": 72.8330,
+    "neighbors": [
+      { "station": "Versova", "line": "Blue", "time": 3 },
+      { "station": "Azad Nagar", "line": "Blue", "time": 2 }
+    ]
+  },
+  "Azad Nagar": {
+    "lat": 19.1267, "lng": 72.8417,
+    "neighbors": [
+      { "station": "DN Nagar", "line": "Blue", "time": 2 },
+      { "station": "Andheri", "line": "Blue", "time": 3 }
+    ]
+  },
+  "Andheri": {
+    "lat": 19.1197, "lng": 72.8468,
+    "neighbors": [
+      { "station": "Azad Nagar", "line": "Blue", "time": 3 },
+      { "station": "Western Express Highway", "line": "Blue", "time": 3 }
+    ]
+  },
+  "Western Express Highway": {
+    "lat": 19.1152, "lng": 72.8557,
+    "neighbors": [
+      { "station": "Andheri", "line": "Blue", "time": 3 },
+      { "station": "Chakala (J B Nagar)", "line": "Blue", "time": 2 }
+    ]
+  },
+  "Chakala (J B Nagar)": {
+    "lat": 19.1117, "lng": 72.8652,
+    "neighbors": [
+      { "station": "Western Express Highway", "line": "Blue", "time": 2 },
+      { "station": "Marol Naka", "line": "Blue", "time": 2 }
+    ]
+  },
+  "Marol Naka": {
+    "lat": 19.1060, "lng": 72.8736,
+    "neighbors": [
+      { "station": "Chakala (J B Nagar)", "line": "Blue", "time": 2 },
+      { "station": "Saki Naka", "line": "Blue", "time": 3 }
+    ]
+  },
+  "Saki Naka": {
+    "lat": 19.0987, "lng": 72.8895,
+    "neighbors": [
+      { "station": "Marol Naka", "line": "Blue", "time": 3 },
+      { "station": "Asalpha", "line": "Blue", "time": 2 }
+    ]
+  },
+  "Asalpha": {
+    "lat": 19.0875, "lng": 72.8957,
+    "neighbors": [
+      { "station": "Saki Naka", "line": "Blue", "time": 2 },
+      { "station": "Jagruti Nagar", "line": "Blue", "time": 2 }
+    ]
+  },
+  "Jagruti Nagar": {
+    "lat": 19.0829, "lng": 72.9013,
+    "neighbors": [
+      { "station": "Asalpha", "line": "Blue", "time": 2 },
+      { "station": "Ghatkopar", "line": "Blue", "time": 3 }
+    ]
+  },
+  "Ghatkopar": {
+    "lat": 19.0790, "lng": 72.9086,
+    "neighbors": [
+      { "station": "Jagruti Nagar", "line": "Blue", "time": 3 }
+    ]
+  }
+}

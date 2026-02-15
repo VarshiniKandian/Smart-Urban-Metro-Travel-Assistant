@@ -1,160 +1,176 @@
+// auth-check.js
 const firebaseConfig = {
+  // FIX: Using the corrected API Key (Removed one 'G')
   apiKey: "AIzaSyA6HMF12xiFiCR05dGAKXcnpNUW2DvMkWg",
   authDomain: "metronavigator-38a8e.firebaseapp.com",
   projectId: "metronavigator-38a8e",
   storageBucket: "metronavigator-38a8e.appspot.com",
   messagingSenderId: "57035451467",
-  appId: "1:57035451467:web:4d5fb037d475c311d631ce"
+  appId: "1:57035451467:web:4d5fb037d4475c311d631ce"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-
-document.addEventListener('DOMContentLoaded', () => {
-  const logoutBtn = document.getElementById('logoutBtn');
-  const userEmail = document.getElementById('userEmail');
-  const startJourneyBtn = document.getElementById('startJourney');
-  const endJourneyBtn = document.getElementById('endJourney');
-  const historyBtn = document.getElementById('historyBtn');
-  const modal = document.getElementById('historyModal');
-  const closeModal = document.getElementById('closeHistory');
-  const historyList = document.getElementById('historyList');
-  const fromSelect = document.getElementById('from');
-  const toSelect = document.getElementById('to');
-
-  let currentJourney = null;
-  let currentUser = null;
-
-  // ✅ Make currentUser accessible globally for route-logic.js
-  auth.onAuthStateChanged((user) => {
-    if (!user) {
-      window.location.href = 'login.html';
-    } else {
-      currentUser = user;
-      window.currentUser = user;   
-      userEmail.textContent = user.email;
-    }
-  });
-
-  logoutBtn.addEventListener('click', () => {
+// Global handler for logout, used by map, stats, and history pages
+window.handleLogout = () => {
     auth.signOut().then(() => {
-      window.location.href = 'login.html';
+        alertManager.toastSuccess('Logged out successfully');
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 1000);
+    }).catch(error => {
+        alertManager.error('Logout failed: ' + error.message);
     });
-  });
+};
+/**
+ * Extracts the email prefix as a username, capitalizing the first letter.
+ * @param {string} email 
+ * @returns {string} 
+ */
+function getUsernameFromEmail(email) {
+    if (!email) return 'Guest';
+    const username = email.split('@')[0];
+    
+    return username.charAt(0).toUpperCase() + username.slice(1);
+}
 
-  // ✅ Start Journey
-  startJourneyBtn.addEventListener('click', () => {
-    const from = fromSelect.value;
-    const to = toSelect.value;
+// Global function to load history on the dedicated history.html page
+window.loadHistory = (currentUser) => {
+    const historyListBody = document.getElementById('historyList');
+    if (!historyListBody) return; // Only run on history.html
 
-    if (!from || !to) {
-      alert('Please select both From and To stations');
-      return;
+    if (!currentUser || !currentUser.uid) {
+        // This is handled by the initial DOM load check below, but a fallback display is good.
+        historyListBody.innerHTML = '<tr><td colspan="5">Please log in to view your travel history.</td></tr>';
+        alertManager.error('User not authenticated. Please log out and back in.');
+        return;
     }
 
-    currentJourney = {
-      userId: auth.currentUser.uid,
-      fromStation: from,
-      toStation: to,
-      startTime: new Date(),
-      endTime: null,
-      route: null,
-      totalTime: null,
-      fare: null   // ✅ added fare field
-    };
-
-    alert(`Journey started from ${from} to ${to}!`);
-
-    // ✅ Make currentJourney accessible to route-logic.js (to update route, time, fare)
-    window.currentJourney = currentJourney;
-  });
-
-  // ✅ End Journey (save to Firestore)
-  endJourneyBtn.addEventListener('click', () => {
-    if (!currentJourney) {
-      alert('No journey in progress');
-      return;
-    }
-
-    currentJourney.endTime = new Date();
-
-    db.collection('journeys').add(currentJourney)
-      .then(() => {
-        alert(`Journey saved: ${currentJourney.fromStation} → ${currentJourney.toStation}`);
-        currentJourney = null;
-        window.currentJourney = null;
-      })
-      .catch(error => {
-        console.error('Error saving journey: ', error);
-        alert('Error saving journey');
-      });
-  });
-
-  // ✅ Travel History
-  historyBtn.addEventListener('click', () => {
-    console.log('Travel History button clicked');
-
-    if (!currentUser) {
-      console.log('No user is logged in');
-      alert('Please log in first.');
-      return;
-    }
-
-    console.log('Current user UID:', currentUser.uid);
-
+    const loadingAlert = alertManager.loading('Loading travel history...');
     const journeysRef = firebase.firestore().collection('journeys');
 
+    // Use get() instead of onSnapshot() for a single-page view
     journeysRef
       .where('userId', '==', currentUser.uid)
       .orderBy('startTime', 'desc')
-      // .limit(5)   // ❌ remove if you want full history
-      .onSnapshot(snapshot => {
-        console.log('Snapshot received:', snapshot.docs.length);
-
-        historyList.innerHTML = ''; // clear previous list
-
+      .get() 
+      .then(snapshot => {
+        loadingAlert.close();
+        historyListBody.innerHTML = ''; // Clear "Loading history..."
         if (snapshot.empty) {
-          console.log('No travel history found');
-          historyList.innerHTML = '<p>No travel history found.</p>';
+          historyListBody.innerHTML = '<tr><td colspan="5">No travel history found.</td></tr>';
+          alertManager.info('No travel history found.');
         } else {
           snapshot.forEach(doc => {
             const j = doc.data();
-            console.log('Journey doc:', j);
-
-            const div = document.createElement('div');
-            div.className = 'history-item';
-            div.innerHTML = `
-              <strong>${j.fromStation} → ${j.toStation}</strong>
-              <small>Time: ${j.totalTime || "N/A"} mins</small>
-              <small>Fare: ₹${j.fare || "N/A"}</small>
-              <small>Started: ${j.startTime && j.startTime.seconds 
-                ? new Date(j.startTime.seconds*1000).toLocaleString() 
-                : 'N/A'}</small>
+            
+            // Format Start Time for the "Date" column
+            const startedDate = j.startTime && j.startTime.seconds
+                ? new Date(j.startTime.seconds * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                : 'N/A';
+            
+            // Create a table row
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${startedDate}</td>
+              <td>${j.fromStation || "N/A"}</td>
+              <td>${j.toStation || "N/A"}</td>
+              <td>${j.totalTime || "--"} min</td>
+              <td><strong>₹${j.fare || "--"}</strong></td>
             `;
-            historyList.appendChild(div);
+            historyListBody.appendChild(tr);
           });
+          alertManager.toastSuccess(`Loaded ${snapshot.docs.length} journeys`);
         }
-
-        // Show the modal safely
-        if (modal) {
-          modal.style.display = 'flex';
-        } else {
-          console.log('Modal element not found');
-        }
-      }, error => {
-        console.error('Error fetching journeys:', error);
-        alert('Error fetching travel history. Check console.');
+      })
+      .catch(error => {
+        loadingAlert.close();
+        console.error('Error fetching journeys: ', error);
+        historyListBody.innerHTML = '<tr><td colspan="5">Error loading history.</td></tr>';
+        alertManager.error('Error fetching travel history. Check console.');
       });
-  });
+}
 
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
 
-  window.onclick = function(event) {
-    if (event.target === modal) {
-      modal.style.display = 'none';
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn'); 
+  const logoutBtnStats = document.querySelector('.stats-header-bar #logoutBtn'); 
+  
+  const userDisplay = document.getElementById('userDisplay');
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  
+  const endJourneyBtn = document.getElementById('endJourney');
+  
+  let currentUser = null;
+  
+  // FIX: REMOVED all conditional redirect logic. User data is loaded *if* authenticated.
+  auth.onAuthStateChanged((user) => {
+    if (!user) {
+      // User not logged in, but we DON'T redirect, just show guest info/defaults
+      if (welcomeMessage) welcomeMessage.textContent = 'Welcome, Guest!';
+      if (userDisplay) userDisplay.textContent = 'Guest';
+      
+      // If we are on the history page and not logged in, show an error state
+      if (document.getElementById('historyList')) {
+          document.getElementById('historyList').innerHTML = '<tr><td colspan="5">Please log in to view your travel history.</td></tr>';
+      }
+
+    } else {
+      // User IS logged in, load profile data
+      currentUser = user;
+      window.currentUser = user;
+      
+      const username = getUsernameFromEmail(user.email);
+      
+      // Update sidebar/header displays
+      if (userDisplay) userDisplay.textContent = username;
+      if (welcomeMessage) welcomeMessage.textContent = `Welcome, ${username}! 👋`;
+      
+      // If we are on the history page and logged in, load the history data
+      if (document.getElementById('historyList')) {
+          window.loadHistory(currentUser);
+      }
     }
-  };
+  });
+  
+  // --- Attach logout handlers ---
+  if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', window.handleLogout);
+  if (logoutBtnStats) logoutBtnStats.addEventListener('click', window.handleLogout);
+  
+  // --- Journey Ending Logic (Only present on map.html) ---
+  if (endJourneyBtn) {
+    endJourneyBtn.addEventListener('click', () => {
+      const journeyToSave = window.currentJourney;
+      if (!journeyToSave) {
+        alertManager.error('No journey in progress. Please click "Find Route" first.');
+        return;
+      }
+      if (journeyToSave.fare === null || journeyToSave.totalTime === null) {
+        alertManager.error('Journey data is incomplete. Please try finding the route again.');
+        return;
+      }
+      
+      if (!currentUser) {
+          alertManager.error('User not authenticated. Please log out and back in.');
+          return;
+      }
+      
+      journeyToSave.userId = currentUser.uid;
+      journeyToSave.endTime = new Date();
+      const loadingAlert = alertManager.loading('Saving your journey...');
+      db.collection('journeys').add(journeyToSave)
+        .then(() => {
+          loadingAlert.close();
+          alertManager.success(`Journey saved: ${journeyToSave.fromStation} → ${journeyToSave.toStation}`);
+          window.currentJourney = null;
+        })
+        .catch(error => {
+          loadingAlert.close();
+          console.error('Error saving journey: ', error);
+          alertManager.error('Error saving journey. Please try again.');
+        });
+    });
+  }
+  
+  // REMOVED: All old History Modal Logic from map.html
 });
